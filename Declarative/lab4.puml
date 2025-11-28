@@ -1,0 +1,47 @@
+﻿@startuml lab4
+title Order Processing
+
+|Customer|
+start
+:Browses products;
+:Starts order;
+
+|Application|
+:Creates order with status "Pending";
+
+repeat
+  :Adds products to order;
+  
+  fork
+    :Checks product availability;
+  fork again
+    :Logs user actions;
+  end fork
+
+  if () then (Product available)
+    :Confirms addition;
+  else (Product not available)
+    :Shows out-of-stock message;
+  endif
+repeat while (Wants to add more)
+
+|Customer|
+:Confirms order;
+
+|Payment Service|
+:Creates payment session;
+:Processes payment;
+
+if () then (Payment successful)
+  |Application|
+  :Updates status to "Paid";
+  :Shows success message;
+else (Payment not successful)
+  |Application|
+  :Updates status to "Payment Failed";
+  :Shows failure message;
+endif
+
+|Customer|
+stop
+@enduml
