@@ -1,5 +1,5 @@
 ﻿@startuml lab4
-title Order Processing
+title Pool
 
 |Customer|
 start
@@ -32,16 +32,16 @@ repeat while (Wants to add more)
 :Creates payment session;
 :Processes payment;
 
+|Application|
 if () then (Payment successful)
-  |Application|
   :Updates status to "Paid";
-  :Shows success message;
 else (Payment not successful)
-  |Application|
-  :Updates status to "Payment Failed";
-  :Shows failure message;
+  :Updates status to "Failed";
 endif
 
+:Send Payment Status Message;
+
 |Customer|
+:Read Payment Status Message;
 stop
 @enduml
